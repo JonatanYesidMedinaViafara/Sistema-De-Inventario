@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventario</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .cantidad-alarmante {
+            color: red;
+        }
+        .cantidad-moderada {
+            color: blue;
+        }
+        .cantidad-normal {
+            color: black;
+        }
+        .alert-icon {
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Inventario de Productos</h2>
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>ID Producto</th>
+                    <th>Nombre Producto</th>
+                    <th>Precio</th>
+                    <th>Cantidad</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for producto in productos %}
+                <tr>
+                    <td>{{ producto.id_producto }}</td>
+                    <td>{{ producto.nombre_producto }}</td>
+                    <td>{{ producto.precio }}</td>
+                    <td class="
+                        {% if producto.cantidad <= 10 %}
+                            cantidad-alarmante
+                        {% elif 11 <= producto.cantidad < 30 %}
+                            cantidad-moderada
+                        {% else %}
+                            cantidad-normal
+                        {% endif %}
+                    ">
+                        {{ producto.cantidad }}
+                        {% if producto.cantidad <= 10 %}
+                            <span class="alert-icon" onclick="mostrarAlerta()">
+                                &#9888;
+                            </span>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        function mostrarAlerta() {
+            alert("La cantidad en el inventario es alarmante");
+        }
+    </script>
+</body>
+</html>
+
+{% endblock %}

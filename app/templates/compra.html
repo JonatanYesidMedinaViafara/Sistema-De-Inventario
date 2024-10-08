@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario de Compras</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/compra.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h2>Formulario de Compra</h2>
+        <form action="/agregar_producto" method="POST">
+            <div class="form-group">
+                <label for="numero_producto">Número del Producto:</label>
+                <input type="text" id="numero_producto" name="numero_producto" required>
+            </div>
+            <div class="form-group">
+                <label for="cantidad">Cantidad:</label>
+                <input type="text" id="cantidad" name="cantidad" required>
+            </div>
+            <div class="form-group">
+                <label for="nombre_producto">Nombre del Producto:</label>
+                <input type="text" id="nombre_producto" name="nombre_producto" required>
+            </div>
+            <div class="form-group">
+                <label for="proveedor">Proveedor:</label>
+                <input type="text" id="proveedor" name="proveedor" required>
+            </div>
+            <div class="form-group">
+                <label for="precio">Precio:</label>
+                <input type="text" id="precio" name="precio" required>
+            </div>
+            <button type="submit">Agregar Producto</button>
+        </form>
+    </div>
+</body>
+</html>
+
+
+
+{% endblock %}

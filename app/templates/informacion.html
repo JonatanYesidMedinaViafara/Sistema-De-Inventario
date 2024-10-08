@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Inventario - Discoteca</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/informacion.css') }}">
+    <style>
+        /* Estilos CSS aquí */
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Informacion del Sistema de Inventario para Discotecas</h1>
+        <p>Este sistema te ayudará a gestionar el inventario de tu discoteca de manera eficiente y organizada.</p>
+    </header>
+
+    <section id="que-es">
+        <h2>¿Qué es el Sistema de Inventario?</h2>
+        <p>El Sistema de Inventario es una aplicación web diseñada para simplificar el seguimiento y la gestión de los productos en tu discoteca. Con esta herramienta, puedes realizar un seguimiento detallado de tus productos, administrar pedidos, gestionar proveedores y mucho más.</p>
+    </section>
+
+    <section id="como-funciona">
+        <h2>¿Cómo funciona?</h2>
+        <p>El funcionamiento del Sistema de Inventario es bastante sencillo:</p>
+        <ol>
+            <li><strong>Inicio de Sesión:</strong> Para acceder al sistema, simplemente inicia sesión con tu nombre de usuario y contraseña. Si no tienes una cuenta, puedes contactarnos.</li>
+            <li><strong>Gestión de Productos:</strong> Una vez dentro, podrás ver todos tus productos disponibles. Puedes agregar nuevos productos especificando su nombre, cantidad inicial y otros detalles relevantes. También puedes actualizar la información de productos existentes o eliminar productos que ya no necesites.</li>
+            <li><strong>Control de Inventarios:</strong> El sistema te ofrece un control en tiempo real de tu inventario. Puedes ver la cantidad actual de cada producto y recibir notificaciones cuando los niveles de stock sean bajos.</li>
+            <li><strong>Registro de Ventas y Compras:</strong> Puedes registrar las ventas realizadas en tu discoteca, especificando los productos vendidos y la cantidad. Además, puedes registrar las compras que hagas a tus proveedores, manteniendo un historial detallado de todas las transacciones.</li>
+            <li><strong>Interfaz Intuitiva:</strong> La interfaz del Sistema de Inventario está diseñada para ser fácil de usar. Puedes acceder a todas las funciones principales desde un menú intuitivo y realizar tus tareas de manera rápida y eficiente.</li>
+        </ol>
+    </section>
+
+    <section id="soporte">
+        <h2>Soporte</h2>
+        <p>Estamos aquí para ayudarte en caso de que necesites asistencia:</p>
+        <ul>
+            <li>Para obtener <strong>soporte técnico</strong>, puedes enviar un correo electrónico a nuestro equipo de soporte a <a href="mailto:soporte@tudiscoteca.com">soporte@tudiscoteca.com</a>.</li>
+            <li>Si tienes sugerencias para mejorar el sistema o encuentras algún problema, no dudes en <strong>contactarnos</strong>. Tu opinión es importante para nosotros.</li>
+        </ul>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 SistemaDeInventario B&J. Todos los derechos reservados.</p>
+    </footer>
+</body>
+</html>
+
+{% endblock %}

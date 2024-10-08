@@ -1,0 +1,28 @@
+<!-- Template: lista_cargo.html -->
+{% extends "base.html" %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Cargos</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Lista de Cargos</h2>
+        <ul class="list-group">
+            {% for cargo in cargos %}
+                <li class="list-group-item">
+                    <h5>{{ cargo[0] }}</h5>
+                    <p>{{ cargo[1] }}</p>
+                    <p><strong>Usos de Compra:</strong> {{ 'Sí' if cargo[2] else 'No' }}</p>
+                    <p><strong>Usos de Venta:</strong> {{ 'Sí' if cargo[3] else 'No' }}</p>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>
+{% endblock %}

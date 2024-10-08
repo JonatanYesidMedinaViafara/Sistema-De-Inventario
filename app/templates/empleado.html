@@ -1,0 +1,72 @@
+<!-- Template: empleado.html -->
+{% extends "base.html" %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrar Empleado</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Registrar Empleado</h2>
+        <form action="{{ url_for('empleado_bp.crear_empleado') }}" method="post">
+            <div class="form-group">
+                <label for="cedula">Cédula:</label>
+                <input type="text" class="form-control" id="cedula" name="cedula" required>
+            </div>
+            <div class="form-group">
+                <label for="primer_nombre">Primer Nombre:</label>
+                <input type="text" class="form-control" id="primer_nombre" name="primer_nombre" required>
+            </div>
+            <div class="form-group">
+                <label for="primer_apellido">Primer Apellido:</label>
+                <input type="text" class="form-control" id="primer_apellido" name="primer_apellido" required>
+            </div>
+            <div class="form-group">
+                <label for="segundo_apellido">Segundo Apellido:</label>
+                <input type="text" class="form-control" id="segundo_apellido" name="segundo_apellido">
+            </div>
+            <div class="form-group">
+                <label for="telefono">Teléfono o Celular:</label>
+                <input type="text" class="form-control" id="telefono" name="telefono" required>
+            </div>
+            <div class="form-group">
+                <label for="cargo">Cargo:</label>
+                <select class="form-control" id="cargo" name="cargo" required>
+                    {% for cargo in cargos %}
+                        <option value="{{ cargo[0] }}">{{ cargo[1] }}</option>
+                    {% endfor %}
+                </select>
+                <!-- Añadir esta línea para imprimir los cargos -->
+                <p>{{ cargos }}</p>
+            </div>
+            
+            <div class="form-group">
+                <label for="ciudad">Ciudad:</label>
+                <input type="text" class="form-control" id="ciudad" name="ciudad" required>
+            </div>
+            <div class="form-group">
+                <label for="direccion">Dirección:</label>
+                <input type="text" class="form-control" id="direccion" name="direccion" required>
+            </div>
+            <div class="form-group">
+                <label for="numero_emergencia">Número de Emergencia:</label>
+                <input type="text" class="form-control" id="numero_emergencia" name="numero_emergencia" required>
+            </div>
+            <div class="form-group">
+                <label for="nombre_quien_contesta">Nombre de Quien Contesta:</label>
+                <input type="text" class="form-control" id="nombre_quien_contesta" name="nombre_quien_contesta" required>
+            </div>
+            <div class="form-group">
+                <label for="tipo_sangre">Tipo de Sangre:</label>
+                <input type="text" class="form-control" id="tipo_sangre" name="tipo_sangre" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Registrar</button>
+        </form>
+    </div>
+</body>
+</html>
+{% endblock %}

@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Soporte - Tu Empresa</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/soporte.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Centro de Soporte</h1>
+    </header>
+    <main>
+        <section class="support-section">
+            <h2>Problemas Comunes</h2>
+            <div class="support-item">
+                <div class="support-question">¿Cómo puedo resolver un problema técnico?</div>
+                <div class="support-answer">Para resolver problemas técnicos, prueba reiniciar la pagina.</div>
+            </div>
+            <div class="support-item">
+                <div class="support-question">¿Qué hago si encuentro un error?</div>
+                <div class="support-answer">Si encuentras un error, por favor envíanos un mensaje detallando el problema para que podamos ayudarte lo antes posible.</div>
+            </div>
+            <div class="support-item">
+                <div class="support-question">¿Cómo puedo contactar al soporte?</div>
+                <div class="support-answer">Puedes contactarnos a través de nuestro formulario de contacto o enviarnos un mensaje por WhatsApp.</div>
+            </div>
+
+        <section class="whatsapp-support">
+            <h2>Soporte por WhatsApp</h2>
+            <p>Si necesitas asistencia inmediata, puedes contactarnos a través de WhatsApp haciendo clic en el siguiente enlace:</p>
+            <a href="https://wa.link/6nsswb" class="whatsapp-link">Contáctanos en WhatsApp</a>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2024 SistemaDeInventario B&J. Todos los derechos reservados.</p>
+    </footer>
+    <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
+</body>
+</html>
+
+{% endblock %}

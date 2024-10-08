@@ -1,0 +1,23 @@
+document.getElementById("numeroProducto").addEventListener("change", function() {
+    // Aquí puedes incluir la lógica para obtener los datos del producto desde Flask
+    // Por ahora, simplemente establecemos algunos valores de ejemplo
+    var producto = {
+        cantidad: 25, // Ejemplo de cantidad, deberías obtenerla desde Flask
+        nombre: "Producto Ejemplo" // Ejemplo de nombre, deberías obtenerlo desde Flask
+    };
+
+    document.getElementById("cantidad").value = producto.cantidad;
+    document.getElementById("nombreProducto").value = producto.nombre;
+    document.getElementById("stock").value = producto.cantidad;
+
+    // Cambiar el color según la cantidad
+    var stockInput = document.getElementById("stock");
+    stockInput.classList.remove("red", "yellow", "green"); // Limpiar clases anteriores
+    if (producto.cantidad < 20) {
+        stockInput.classList.add("red");
+    } else if (producto.cantidad >= 20 && producto.cantidad < 35) {
+        stockInput.classList.add("yellow");
+    } else {
+        stockInput.classList.add("green");
+    }
+});

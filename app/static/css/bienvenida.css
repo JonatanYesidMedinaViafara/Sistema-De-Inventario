@@ -1,0 +1,42 @@
+/* Estilos para el HTML de bienvenida */
+
+/* Estilos generales */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f7f7f7;
+}
+
+header, footer {
+    background-color: #333;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+}
+
+h1 {
+    margin: 0;
+}
+
+p {
+    font-size: 18px;
+}
+
+/* Estilos para las secciones */
+#about, #how-it-works {
+    padding: 50px 20px;
+}
+
+h2 {
+    color: #333;
+}
+
+ol {
+    padding-left: 20px;
+}
+
+/* Estilos para el footer */
+footer {
+    margin-top: 50px;
+}

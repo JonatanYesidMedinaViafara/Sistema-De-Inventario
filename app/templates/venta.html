@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Ventas</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <h1><i class="fas fa-cash-register"></i> Registro de Ventas</h1>
+        <form id="ventaForm" action="/registrar_venta" method="POST">
+            <div class="form-group">
+                <label for="numero_producto">Número del Producto:</label>
+                <input type="text" id="numero_producto" name="numero_producto" required>
+            </div>
+            <div class="form-group">
+                <label for="cantidad">Cantidad:</label>
+                <input type="number" id="cantidad" name="cantidad" required>
+            </div>
+            <div class="form-group">
+                <label for="cedula">Cédula de Empleado:</label>
+                <input type="text" id="cedula" name="cedula" required>
+            </div>
+            <div class="form-group">
+                <label for="nombre_empleado">Nombre de Empleado:</label>
+                <input type="text" id="nombre_empleado" name="nombre_empleado" readonly>
+            </div>
+            <div class="form-group">
+                <label for="fecha">Fecha:</label>
+                <input type="date" id="fecha" name="fecha" readonly>
+            </div>
+            <div class="form-group">
+                <label for="hora">Hora:</label>
+                <input type="time" id="hora" name="hora" readonly>
+            </div>
+            <div class="form-group">
+                <label for="precio">Precio:</label>
+                <input type="text" id="precio" name="precio" readonly>
+            </div>
+            <button type="submit"><i class="fas fa-cart-plus"></i> Registrar Venta</button>
+        </form>
+    </div>
+    <script src="../static/js/venta.js"></script>
+</body>
+</html>
+
+{% endblock %}

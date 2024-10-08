@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eliminar Proveedor</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/proveedor.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h2>Eliminar Proveedor</h2>
+        <form id="eliminarForm">
+            <div class="form-group">
+                <label for="nit_cedula">NIT o Cédula:</label>
+                <input type="text" class="form-control" id="nit_cedula" name="nit_cedula" placeholder="Ingrese el NIT o número de cédula">
+            </div>
+            <div class="form-group">
+                <label for="empresa">Empresa:</label>
+                <input type="text" class="form-control" id="empresa" name="empresa" readonly>
+            </div>
+            <div class="form-group">
+                <label for="representante">Representante:</label>
+                <input type="text" class="form-control" id="representante" name="representante" readonly>
+            </div>
+            <div class="form-group">
+                <label for="cel_tel">Celular o Teléfono:</label>
+                <input type="text" class="form-control" id="cel_tel" name="cel_tel" readonly>
+            </div>
+            <button type="button" class="btn btn-primary" id="seleccionarBtn">Seleccionar</button>
+            <button type="button" class="btn btn-danger" id="eliminarBtn" disabled>Eliminar</button>
+        </form>
+    </div>
+    <!-- Bootstrap JS (optional) -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function() {
+
+$('#seleccionarBtn').click(function() {
+    var nit_cedula = $('#nit_cedula').val();
+    if (nit_cedula.trim() === '') {
+        alert('Por favor, ingresa el NIT o Cédula del proveedor.');
+    } else {
+        $.ajax({
+            type: 'POST',
+            url: '/buscar_proveedor',
+            data: {'nit_cedula': nit_cedula},
+            dataType: 'json',
+            success: function(response) {
+                if (response.status === 'success') {
+                    $('#empresa').val(response.data.empresa);
+                    $('#representante').val(response.data.representante);
+                    $('#cel_tel').val(response.data.cel_tel);
+                    $('#eliminarBtn').prop('disabled', false);
+                } else {
+                    alert('Proveedor no encontrado.');
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error('Error:', error);
+                alert('Error al buscar el proveedor.');
+            }
+        });
+    }
+});
+
+
+            $('#eliminarBtn').click(function() {
+    var confirmacion = confirm('¿Estás seguro de que quieres eliminar este proveedor?');
+    if (confirmacion) {
+        var nit_cedula = $('#nit_cedula').val();
+        $.ajax({
+            type: 'POST',
+            url: '/proveedor/eliminar',
+            data: {'nit_cedula': nit_cedula},
+            dataType: 'json',
+            success: function(response) {
+                if (response.status === 'success') {
+                    alert(response.message);
+                    window.location.reload(); // Recargar la página después de eliminar el proveedor
+                } else {
+                    alert('Error: ' + response.message);
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error('Error:', error);
+                alert('Error al eliminar el proveedor.');
+            }
+        });
+    }
+}); 
+        });
+    </script>
+</body>
+</html>
+
+
+{% endblock %}

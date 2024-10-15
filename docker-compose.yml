@@ -1,0 +1,40 @@
+version: '3'
+
+services:
+  app:
+    build: .
+#    ports:
+#      - "5000:5000"
+    ports:
+      - "7000:7000"
+
+    depends_on:
+      - db
+    environment:
+      - DB_HOST=db
+      - DB_NAME=sistema_inventario_BD
+      - DB_USER=postgres
+      - DB_PASSWORD=Americ@1927
+    volumes:
+      - .:/app
+    networks:
+      - mynetwork
+
+  db:
+    image: postgres:13
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: Americ@1927
+      POSTGRES_DB: sistema_inventario_BD
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - mynetwork
+
+networks:
+  mynetwork:
+
+volumes:
+  pgdata:

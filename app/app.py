@@ -154,5 +154,7 @@ def pagina_no_encontrada(error):
 # Registrar el manejador de página no encontrada
 app.register_error_handler(404, pagina_no_encontrada)
 
+#if __name__ == '__main__':
+#    app.run(port=7000, debug=True)
 if __name__ == '__main__':
-    app.run(port=7000, debug=True)
+    app.run(host='0.0.0.0', port=7000, debug=True)

@@ -1,5 +1,6 @@
 import os
 
+#se hicieron nuevos cambios para dockerizar la app Web
 class Config:
     DB_HOST = os.getenv('DB_HOST', '127.0.0.1')
     DB_PORT = os.getenv('DB_PORT', '5432')

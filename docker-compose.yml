@@ -1,40 +1,33 @@
-version: '3'
-
+version: '3.8'
 services:
-  app:
+  web:
     build: .
-#    ports:
-#      - "5000:5000"
+    container_name: flask-proyecto-web
     ports:
-      - "7000:7000"
-
-    depends_on:
-      - db
+      - "5000:5000"
     environment:
+      - FLASK_APP=app/app.py  # Ruta completa incluyendo la carpeta 'app'
+      - FLASK_ENV=development
       - DB_HOST=db
+      - DB_PORT=5432
       - DB_NAME=sistema_inventario_BD
       - DB_USER=postgres
       - DB_PASSWORD=Americ@1927
+    depends_on:
+      - db
     volumes:
       - .:/app
-    networks:
-      - mynetwork
 
   db:
-    image: postgres:13
+    image: postgres:latest
     environment:
+      POSTGRES_DB: sistema_inventario_BD
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: Americ@1927
-      POSTGRES_DB: sistema_inventario_BD
     ports:
       - "5432:5432"
     volumes:
-      - pgdata:/var/lib/postgresql/data
-    networks:
-      - mynetwork
-
-networks:
-  mynetwork:
+      - ./path_to_sql_init:/docker-entrypoint-initdb.d
 
 volumes:
-  pgdata:
+  postgres_data:

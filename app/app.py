@@ -6,6 +6,9 @@ from controllers.empleado_controller import empleado_bp
 from controllers.inventario_controller import inventario_bp 
 from controllers.cargo_controller import cargo_bp 
 from models.empleado_model import EmpleadoModel
+from config import Config
+#fallo de docker
+#from config import get_connection
 app = Flask(__name__)
 
 
@@ -64,8 +67,6 @@ def lista_cargo():
 def cargos_empleados():
     return render_template('cargos_empleados.html')
 
-
-
 @app.route('/buscar_proveedor', methods=['POST'])
 def buscar_proveedor():
     if request.method == 'POST':
@@ -76,12 +77,10 @@ def buscar_proveedor():
         else:
             return jsonify({"status": "error", "message": "Proveedor no encontrado."})
 
-
 # Ruta para la página base
 @app.route('/basep')
 def base():
     return render_template('base.html')
-
 
 # Ruta para el controlador del inicio de sesión
 app.add_url_rule('/login', 'login', login, methods=['GET', 'POST'])
@@ -133,7 +132,6 @@ def eliminar_producto():
 def modificar_producto():
     return render_template('modificar_producto.html')
 
-
 @app.route('/proveedor')
 def proveedor():
     return render_template('proveedor.html')
@@ -158,5 +156,12 @@ app.register_error_handler(404, pagina_no_encontrada)
 #if __name__ == '__main__':
 #    app.run(port=7000, debug=True)
 
+#def test_db():
+#    conn = get_connection()
+#    if conn:
+#        return "Conexión a la base de datos exitosa"
+#    else:
+#        return "Fallo al conectar a la base de datos"
+
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=7000, debug=True)
+    app.run(host='0.0.0.0', port=5000, debug=True)

@@ -112,4 +112,3 @@ class ProductoModel:
             return True, "Producto actualizado exitosamente."
         except Exception as error:
             return False, f"Error al actualizar el producto: {error}"
-

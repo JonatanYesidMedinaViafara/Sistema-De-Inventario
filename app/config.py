@@ -1,9 +1,23 @@
-import os
+import psycopg2
 
-#se hicieron nuevos cambios para dockerizar la app Web
 class Config:
-    DB_HOST = os.getenv('DB_HOST', '127.0.0.1')
-    DB_PORT = os.getenv('DB_PORT', '5432')
-    DB_NAME = os.getenv('DB_NAME', 'sistema_inventario_BD')
-    DB_USER = os.getenv('DB_USER', 'postgres')
-    DB_PASSWORD = os.getenv('DB_PASSWORD', 'Americ@1927')
+    DB_HOST = 'localhost'
+    DB_PORT = '5432'  # Puerto predeterminado de PostgreSQL
+    DB_NAME = 'sistema_inventario_BD'
+    DB_USER = 'postgres'
+    DB_PASSWORD = 'Americ@1927'
+
+
+def get_connection():
+    try:
+        connection = psycopg2.connect(
+            host=Config.DB_HOST,
+            user=Config.DB_USER,
+            password=Config.DB_PASSWORD,
+            database=Config.DB_NAME
+        )
+        print("Conexión exitosa")
+        return connection
+    except Exception as ex:
+        print(f"Error de conexión: {ex}")
+        return None

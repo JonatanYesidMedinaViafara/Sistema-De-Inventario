@@ -1,2 +1,4 @@
-Flask==3.0.3
-psycopg2==2.9.9
+Flask>=2.2
+psycopg2-binary
+
+

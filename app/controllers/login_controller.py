@@ -29,8 +29,8 @@ def login():
                     return render_template('login.html', error=error_message)
             except Error as e:
                 print("Error al verificar las credenciales en la base de datos:", e)
-                flash('Error al verificar las credenciales en la base de datos', 'error')
-                return render_template('login.html')
+                error_message = "Error al verificar las credenciales en la base de datos. Por favor, intente de nuevo más tarde."
+                return render_template('login.html', error=error_message)
             finally:
                 connection.close()
         else:

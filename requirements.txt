@@ -1,4 +1,2 @@
 Flask>=2.2
-psycopg2-binary
-
-
+gunicorn                     23.0.0

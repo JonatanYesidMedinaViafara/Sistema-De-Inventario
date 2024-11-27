@@ -6,11 +6,17 @@ from controllers.empleado_controller import empleado_bp
 from controllers.inventario_controller import inventario_bp 
 from controllers.cargo_controller import cargo_bp 
 from models.empleado_model import EmpleadoModel
-from config import Config
-#fallo de docker
-#from config import get_connection
+import os
+
+#importacion del Flask Monitoring Dashboard
+import flask_monitoringdashboard as dashboard # type: ignore
+
+
 app = Flask(__name__)
 
+# Inicializa Flask Monitoring Dashboard
+#dashboard.bind(app)
+dashboard.config.init_from(file='config.cfg')
 
 
 # Registrar el Blueprint
@@ -123,6 +129,11 @@ def inventario():
 def producto():
     return render_template('producto.html')
 
+
+@app.route('/buscar_producto')
+def buscar_producto():
+    return render_template('buscar_producto.html')
+
 @app.route('/eliminar_producto')
 def eliminar_producto():
     return render_template('eliminar_producto.html')
@@ -164,4 +175,6 @@ app.register_error_handler(404, pagina_no_encontrada)
 #        return "Fallo al conectar a la base de datos"
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000, debug=True)
+    if not os.path.exists(app.config['UPLOAD_FOLDER']):
+        os.makedirs(app.config['UPLOAD_FOLDER'])
+    app.run(debug=True, host="0.0.0.0", port=os.getenv("PORT", default=5000))

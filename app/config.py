@@ -1,12 +1,24 @@
 import os
 import psycopg2
+import urllib.parse as urlparse
 
 class Config:
-    DB_HOST = os.environ.get('DB_HOST')
-    DB_PORT = os.environ.get('DB_PORT')
-    DB_NAME = os.environ.get('DB_NAME')
-    DB_USER = os.environ.get('DB_USER')
-    DB_PASSWORD = os.environ.get('DB_PASSWORD')
+    DATABASE_URL = os.environ.get('DATABASE_URL')
+    if DATABASE_URL:
+        url = urlparse.urlparse(DATABASE_URL)
+        DB_HOST = url.hostname
+        DB_PORT = url.port
+        DB_NAME = url.path[1:]  # Quita el '/'
+        DB_USER = url.username
+        DB_PASSWORD = url.password
+    else:
+        # Maneja el caso en que DATABASE_URL no esté definida
+        print("La variable de entorno DATABASE_URL no está definida.")
+        DB_HOST = None
+        DB_PORT = None
+        DB_NAME = None
+        DB_USER = None
+        DB_PASSWORD = None
 
 def get_connection():
     try:
@@ -17,10 +29,10 @@ def get_connection():
             password=Config.DB_PASSWORD,
             database=Config.DB_NAME
         )
-        print("Conexión exitosa")
+        print("Conexión exitosa a la base de datos")
         return connection
     except Exception as ex:
-        print(f"Error de conexión: {ex}")
+        print(f"Error al conectar a la base de datos: {ex}")
         return None
 
 #configuracion de manera local

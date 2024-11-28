@@ -3,7 +3,10 @@ import psycopg2
 
 class Config:
     # Utiliza la variable de entorno DATABASE_URL en Render. Si no está definida, usa valores locales.
-    DATABASE_URL = os.getenv('DATABASE_URL', 'postgresql://postgres:Americ@1927@localhost:5432/sistema_inventario_BD')
+    DATABASE_URL = os.getenv(
+    'DATABASE_URL',
+    'postgresql://postgres:Americ%401927@localhost:5432/sistema_inventario_BD'
+)
 
 
 

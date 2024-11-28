@@ -1,11 +1,17 @@
+import os
 import psycopg2
 
 class Config:
-    DB_HOST = 'localhost'
-    DB_PORT = '5432'  # Puerto predeterminado de PostgreSQL
-    DB_NAME = 'sistema_inventario_BD'
-    DB_USER = 'postgres'
-    DB_PASSWORD = 'Americ@1927'
+    # Utiliza la variable de entorno DATABASE_URL en Render. Si no está definida, usa valores locales.
+    DATABASE_URL = os.getenv('DATABASE_URL', 'postgresql://postgres:Americ@1927@localhost:5432/sistema_inventario_BD')
+
+#configuracion de manera local
+#class Config:
+#    DB_HOST = 'localhost'
+#    DB_PORT = '5432'  # Puerto predeterminado de PostgreSQL
+#    DB_NAME = 'sistema_inventario_BD'
+#    DB_USER = 'postgres'
+#    DB_PASSWORD = 'Americ@1927'
 
 
 def get_connection():

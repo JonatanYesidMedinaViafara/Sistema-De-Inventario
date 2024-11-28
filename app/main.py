@@ -6,12 +6,13 @@ from controllers.empleado_controller import empleado_bp
 from controllers.inventario_controller import inventario_bp 
 from controllers.cargo_controller import cargo_bp 
 from models.empleado_model import EmpleadoModel
+import os
 #importacion del Flask Monitoring Dashboard
 import flask_monitoringdashboard as dashboard # type: ignore
 
 
 app = Flask(__name__)
-
+app.secret_key = os.environ.get('SECRET_KEY', 'bc6e60f303378878e77f05b318fe3c2a')
 # Inicializa Flask Monitoring Dashboard
 #dashboard.bind(app)
 dashboard.config.init_from(file='config.cfg')

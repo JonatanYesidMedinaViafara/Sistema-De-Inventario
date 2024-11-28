@@ -10,9 +10,15 @@ import os
 from flask_sqlalchemy import SQLAlchemy # type: ignore
 #importacion del Flask Monitoring Dashboard
 import flask_monitoringdashboard as dashboard # type: ignore
+from config import Config, get_connection
+
+
 
 
 app = Flask(__name__)
+
+# Configuración de la aplicación
+app.config.from_object(Config)
 
 # Inicializa Flask Monitoring Dashboard
 #dashboard.bind(app)
@@ -177,10 +183,7 @@ app.register_error_handler(404, pagina_no_encontrada)
 import os
 
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', '323211589adf29cfbb2fb629aa205ff')  # Clave secreta
-app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv(
-    'DATABASE_URL',
-    'postgresql://postgres:password@localhost:5432/db_name'
-)  # URL de PostgreSQL desde variables de entorno
+ # URL de PostgreSQL desde variables de entorno
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False  # Desactiva el seguimiento de modificaciones
 app.config['UPLOAD_FOLDER'] = os.getenv('UPLOAD_FOLDER', 'uploads')  # Carpeta de subidas
 

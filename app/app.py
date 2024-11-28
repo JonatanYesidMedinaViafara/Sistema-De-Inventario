@@ -7,7 +7,7 @@ from controllers.inventario_controller import inventario_bp
 from controllers.cargo_controller import cargo_bp 
 from models.empleado_model import EmpleadoModel
 import os
-
+from flask_sqlalchemy import SQLAlchemy # type: ignore
 #importacion del Flask Monitoring Dashboard
 import flask_monitoringdashboard as dashboard # type: ignore
 
@@ -173,6 +173,18 @@ app.register_error_handler(404, pagina_no_encontrada)
 #        return "Conexión a la base de datos exitosa"
 #    else:
 #        return "Fallo al conectar a la base de datos"
+# Configuración de la aplicación
+import os
+
+app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', '323211589adf29cfbb2fb629aa205ff')  # Clave secreta
+app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv(
+    'DATABASE_URL',
+    'postgresql://postgres:password@localhost:5432/db_name'
+)  # URL de PostgreSQL desde variables de entorno
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False  # Desactiva el seguimiento de modificaciones
+app.config['UPLOAD_FOLDER'] = os.getenv('UPLOAD_FOLDER', 'uploads')  # Carpeta de subidas
+
+
 
 if __name__ == '__main__':
     if not os.path.exists(app.config['UPLOAD_FOLDER']):

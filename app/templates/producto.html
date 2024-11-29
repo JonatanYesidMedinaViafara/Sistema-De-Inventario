@@ -5,29 +5,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Formulario de Proveedor</title>
+    <title>Formulario de Producto</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/proveedor.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/producto.css') }}">
 </head>
 <body>
-    <div class="container">
+    <div class="container mt-5">
         <h2>Crear Producto</h2>
-        <form method="POST"> 
+
+        <!-- Mostrar mensaje de error o éxito si existe -->
+        {% if error_message %}
+            <div class="alert alert-danger">{{ error_message }}</div>
+        {% elif success_message %}
+            <div class="alert alert-success">{{ success_message }}</div>
+        {% endif %}
+
+        <form method="POST" action="{{ url_for('producto_bp.producto_form') }}"> 
             <div class="form-group">
                 <label for="id_producto">ID Producto:</label>
-                <input type="text" class="form-control" id="id_producto" name="id_producto" placeholder="Ingrese el ID del producto">
+                <input type="text" class="form-control" id="id_producto" name="id_producto" placeholder="Ingrese el ID del producto" required>
             </div>
             <div class="form-group">
                 <label for="nombre_producto">Nombre del Producto:</label>
-                <input type="text" class="form-control" id="nombre_producto" name="nombre_producto" placeholder="Ingrese el nombre del producto">
+                <input type="text" class="form-control" id="nombre_producto" name="nombre_producto" placeholder="Ingrese el nombre del producto" required>
             </div>
             <div class="form-group">
                 <label for="precio">Precio:</label>
-                <input type="text" class="form-control" id="precio" name="precio" placeholder="Ingrese el precio del producto">
+                <input type="number" class="form-control" id="precio" name="precio" placeholder="Ingrese el precio del producto" required step="0.01">
             </div>
             <div class="form-group">
                 <label for="cantidad">Cantidad:</label>
-                <input type="text" class="form-control" id="cantidad" name="cantidad" placeholder="Ingrese la cantidad del producto">
+                <input type="number" class="form-control" id="cantidad" name="cantidad" placeholder="Ingrese la cantidad del producto" required>
             </div>
             <button type="submit" class="btn btn-primary">Enviar</button>
         </form>

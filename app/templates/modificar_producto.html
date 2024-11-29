@@ -1,120 +1,64 @@
 {% extends "base.html" %}
 {% block content %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Modificar Producto</title>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        body {
-            background-color: #f8f9fa;
-            font-family: 'Arial', sans-serif;
-        }
-        .container {
-            background-color: #ffffff;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            padding: 30px;
-            margin-top: 50px;
-        }
-        h1 {
-            color: #343a40;
-        }
-        .form-group label {
-            color: #495057;
-            font-weight: bold;
-        }
-        .btn-primary, .btn-success {
-            width: 100%;
-            padding: 10px;
-            font-size: 16px;
-            font-weight: bold;
-        }
-        .btn-primary {
-            background-color: #007bff;
-            border-color: #007bff;
-        }
-        .btn-success {
-            background-color: #28a745;
-            border-color: #28a745;
-        }
-        .btn-primary:hover, .btn-success:hover {
-            opacity: 0.9;
-        }
-        .form-group input {
-            border-radius: 4px;
-            border: 1px solid #ced4da;
-            padding: 10px;
-        }
-        .form-group input:focus {
-            border-color: #80bdff;
-            outline: 0;
-            box-shadow: 0 0 5px rgba(0, 123, 255, 0.25);
-        }
-    </style>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-</head>
-<body>
-    <div class="container">
-        <h1 class="text-center">Modificar Producto</h1>
-        <form id="buscar-form" class="my-4">
-            <div class="form-group">
-                <label for="id_producto">Número de Producto:</label>
-                <input type="text" class="form-control" id="id_producto" name="id_producto" required>
-            </div>
-            <button type="button" class="btn btn-primary" id="buscar-btn">Seleccionar</button>
-        </form>
- 
-        <form id="modificar-form" style="display:none;">
-            <div class="form-group">
-                <label for="nombre_producto">Nombre del Producto:</label>
-                <input type="text" class="form-control" id="nombre_producto" name="nombre_producto">
-            </div>
-            <div class="form-group">
-                <label for="precio">Precio:</label>
-                <input type="text" class="form-control" id="precio" name="precio">
-            </div>
-            <button type="button" class="btn btn-success" id="guardar-btn">Guardar Cambios</button>
-        </form>
-    </div>
 
-    <script>
-        $(document).ready(function(){
-            $('#buscar-btn').click(function(){
-                var id_producto = $('#id_producto').val();
-                $.post('/producto/buscar_producto', {id_producto: id_producto}, function(response){
-                    if(response.status == 'success'){
+<div class="container">
+    <h1 class="text-center">Modificar Producto</h1>
+    
+    <!-- Formulario para buscar producto -->
+    <form id="buscar-form" class="my-4">
+        <div class="form-group">
+            <label for="id_producto">ID del Producto:</label>
+            <input type="text" class="form-control" id="id_producto" name="id_producto" required>
+        </div>
+        <button type="button" class="btn btn-primary" id="buscar-btn">Seleccionar</button>
+    </form>
+
+    <!-- Formulario para modificar producto -->
+    <form id="modificar-form" style="display:none;" method="POST" action="{{ url_for('producto_bp.modificar_producto') }}">
+        <div class="form-group">
+            <label for="nombre_producto">Nombre del Producto:</label>
+            <input type="text" class="form-control" id="nombre_producto" name="nombre_producto" required>
+        </div>
+        <div class="form-group">
+            <label for="precio">Precio:</label>
+            <input type="text" class="form-control" id="precio" name="precio" required>
+        </div>
+        <div class="form-group">
+            <label for="cantidad">Cantidad:</label>
+            <input type="number" class="form-control" id="cantidad" name="cantidad" required>
+        </div>
+        <button type="submit" class="btn btn-success">Guardar Cambios</button>
+    </form>
+</div>
+
+<script>
+    $(document).ready(function(){
+        $('#buscar-btn').click(function(){
+            var id_producto = $('#id_producto').val();
+            $.ajax({
+                url: "{{ url_for('producto_bp.buscar_producto') }}",
+                type: "POST",
+                data: {id_producto: id_producto},
+                success: function(response){
+                    if(response && response.status === 'success' && response.data){
                         $('#modificar-form').show();
-                        $('#nombre_producto').val(response.data.nombre_producto);
-                        $('#precio').val(response.data.precio);
+                        $('#nombre_producto').val(response.data.nombre_producto || '');
+                        $('#precio').val(response.data.precio_producto || '');
+                        $('#cantidad').val(response.data.cantidad_producto || '');
                     } else {
-                        alert(response.message);
+                        $('#modificar-form').hide();
+                        alert(response.message || 'Error al buscar el producto.');
                     }
-                });
-            });
-
-            $('#guardar-btn').click(function(){
-                var id_producto = $('#id_producto').val();
-                var nombre_producto = $('#nombre_producto').val();
-                var precio = $('#precio').val();
-                $.post('/producto/modificar_producto', {
-                    id_producto: id_producto,
-                    nombre_producto: nombre_producto,
-                    precio: precio
-                }, function(response){
-                    if(response.status == 'success'){
-                        alert('Producto actualizado exitosamente.');
-                    } else {
-                        alert(response.message);
-                    }
-                });
+                },
+                error: function(){
+                    $('#modificar-form').hide();
+                    alert('Error en la solicitud. Por favor, intente de nuevo.');
+                }
             });
         });
-    </script>
-</body>
-</html>
+    });
+</script>
 
 {% endblock %}
+
+      

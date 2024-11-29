@@ -9,9 +9,13 @@ from models.empleado_model import EmpleadoModel
 import os
 #importacion del Flask Monitoring Dashboard
 import flask_monitoringdashboard as dashboard # type: ignore
-
+from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
 
 app = Flask(__name__)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres_bd:vNYoA034gJpgYfOfYdhPr7FWYtGKtNPz@dpg-ct491alumphs73e4g78g-a/sistema_inventario_bd'
+db = SQLAlchemy(app)
+migrate = Migrate(app, db)
 app.secret_key = os.environ.get('SECRET_KEY', 'bc6e60f303378878e77f05b318fe3c2a')
 # Inicializa Flask Monitoring Dashboard
 #dashboard.bind(app)

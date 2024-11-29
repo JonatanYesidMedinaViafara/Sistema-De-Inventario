@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buscar Producto</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/producto.css') }}">
+</head>
+<body>
+    <div class="container mt-5">
+        <h2>Buscar Producto</h2>
+
+        <!-- Mostrar mensaje si no se encuentra el producto -->
+        {% if not producto and request.method == 'POST' %}
+            <div class="alert alert-warning">Producto no encontrado.</div>
+        {% endif %}
+
+        <!-- Formulario para buscar producto -->
+        <div class="card mb-4">
+            <div class="card-body">
+                <form method="POST" action="{{ url_for('producto_bp.buscar_producto') }}">
+                    <div class="form-group">
+                        <label for="buscar_id_producto">ID Producto:</label>
+                        <input type="text" class="form-control" id="buscar_id_producto" name="id_producto" placeholder="Ingrese el ID del producto a buscar" required>
+                    </div>
+                    <button type="submit" class="btn btn-secondary">Buscar Producto</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Mostrar resultado de la búsqueda -->
+        {% if producto %}
+            <div class="card mt-4">
+                <div class="card-body">
+                    <h4 class="card-title mb-3">Detalles del Producto</h4>
+                    <p> ¡</p>
+                    <p><strong> Nombre : </strong> {{ producto.nombre_producto }}</p>
+                    <p><strong> Precio : </strong> {{ producto.precio_producto }}</p>
+                    <p><strong> Cantidad : </strong> {{ producto.cantidad_producto }}</p>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+
+    <!-- Bootstrap JS (optional) -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
+{% endblock %}

@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registro de Ventas</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="../static/css/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 <body>
@@ -15,15 +15,19 @@
         <form id="ventaForm" action="/registrar_venta" method="POST">
             <div class="form-group">
                 <label for="numero_producto">Número del Producto:</label>
-                <input type="text" id="numero_producto" name="numero_producto" required>
+                <input type="text" id="numero_producto" name="numero_producto" required oninput="validarNumeroProducto()">
+            </div>
+            <div class="form-group">
+                <label for="nombre_producto">Nombre del Producto:</label>
+                <input type="text" id="nombre_producto" name="nombre_producto" readonly>
             </div>
             <div class="form-group">
                 <label for="cantidad">Cantidad:</label>
-                <input type="number" id="cantidad" name="cantidad" required>
+                <input type="number" id="cantidad" name="cantidad" required disabled>
             </div>
             <div class="form-group">
                 <label for="cedula">Cédula de Empleado:</label>
-                <input type="text" id="cedula" name="cedula" required>
+                <input type="text" id="cedula" name="cedula" required oninput="validarCedula()">
             </div>
             <div class="form-group">
                 <label for="nombre_empleado">Nombre de Empleado:</label>
@@ -45,6 +49,74 @@
         </form>
     </div>
     <script src="../static/js/venta.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const fecha = new Date().toISOString().split('T')[0];
+            const hora = new Date().toISOString().split('T')[1].slice(0, 5);
+            document.getElementById('fecha').value = fecha;
+            document.getElementById('hora').value = hora;
+        });
+
+        function validarNumeroProducto() {
+            const numeroProducto = document.getElementById('numero_producto').value.trim();
+            if (numeroProducto === "") {
+                alert('Por favor, ingrese un número de producto válido.');
+                return;
+            }
+            // Buscar el nombre del producto según el número
+            fetch(`/buscar_producto/${numeroProducto}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Producto no encontrado');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (data && data.nombre_producto) {
+                        document.getElementById('nombre_producto').value = data.nombre_producto;
+                        document.getElementById('cantidad').disabled = false;
+                        document.getElementById('cantidad').max = data.cantidad;
+                        document.getElementById('precio').dataset.unitario = data.precio;
+                    }
+                })
+                .catch(error => {
+                    alert(error.message);
+                    document.getElementById('nombre_producto').value = '';
+                    document.getElementById('cantidad').disabled = true;
+                });
+        }
+
+        function validarCedula() {
+            const cedula = document.getElementById('cedula').value.trim();
+            if (cedula === "") {
+                alert('Por favor, ingrese una cédula válida.');
+                return;
+            }
+            // Buscar el empleado según la cédula
+            fetch(`/buscar_empleado/${cedula}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Empleado no encontrado');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (data && data.primer_nombre && data.primer_apellido) {
+                        document.getElementById('nombre_empleado').value = data.primer_nombre + ' ' + data.primer_apellido;
+                    }
+                })
+                .catch(error => {
+                    alert(error.message);
+                    document.getElementById('nombre_empleado').value = '';
+                });
+        }
+
+        document.getElementById('cantidad').addEventListener('input', () => {
+            const cantidad = document.getElementById('cantidad').value;
+            const precioUnitario = parseFloat(document.getElementById('precio').dataset.unitario || 0);
+            document.getElementById('precio').value = (cantidad * precioUnitario).toFixed(2);
+        });
+    </script>
 </body>
 </html>
 

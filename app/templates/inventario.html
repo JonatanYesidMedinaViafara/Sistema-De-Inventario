@@ -4,7 +4,6 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inventario</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
@@ -39,18 +38,18 @@
                 <tr>
                     <td>{{ producto.id_producto }}</td>
                     <td>{{ producto.nombre_producto }}</td>
-                    <td>{{ producto.precio }}</td>
+                    <td>{{ producto.precio_producto }}</td>
                     <td class="
-                        {% if producto.cantidad <= 10 %}
+                        {% if producto.cantidad_producto <= 10 %}
                             cantidad-alarmante
-                        {% elif 11 <= producto.cantidad < 30 %}
+                        {% elif 11 <= producto.cantidad_producto < 30 %}
                             cantidad-moderada
                         {% else %}
                             cantidad-normal
                         {% endif %}
                     ">
-                        {{ producto.cantidad }}
-                        {% if producto.cantidad <= 10 %}
+                        {{ producto.cantidad_producto }}
+                        {% if producto.cantidad_producto <= 10 %}
                             <span class="alert-icon" onclick="mostrarAlerta()">
                                 &#9888;
                             </span>
@@ -69,5 +68,4 @@
     </script>
 </body>
 </html>
-
 {% endblock %}
